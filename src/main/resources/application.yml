@@ -1,8 +1,36 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8086
+  servlet:
+    context-path: /travel
+
 spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/travel?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-      username: root
-      password: 1234
+  profiles:
+    active: ${ACTIVE:dev}
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.pengrui.travel.sys.*.entity
+  global-config:
+    db-config:
+      id-type: AUTO
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  configuration:
+    cache-enabled: false
+    jdbc-type-for-null: 'null'
+    map-underscore-to-camel-case: true
